@@ -5,10 +5,10 @@
  */
 package com.sig.controller;
 
-import com.sig.model.InvoiceSalesHeaderSales;
-import com.sig.model.InvoicSaleseLine;
-import com.sig.model.InvoiceSalesLineTableModel;
-import com.sig.view.InvoiceSalesFrame;
+import com.sig.model.InvoiceHeader;
+import com.sig.model.InvoiceLine;
+import com.sig.model.InvoiceLineTableModel;
+import com.sig.view.InvoiceFrame;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -19,26 +19,26 @@ import javax.swing.event.ListSelectionListener;
  */
 public class TableSelectionListener implements ListSelectionListener {
 
-    private InvoiceSalesFrame framee;
+    private InvoiceFrame frameInvo;
 
-    public TableSelectionListener(InvoiceSalesFrame framee) {
-        this.framee = framee;
+    public TableSelectionListener(InvoiceFrame frame) {
+        this.frameInvo = frame;
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        int selectedInvIndex = framee.getInvHTbl().getSelectedRow();
+        int selectedInvIndex = frameInvo.getInvHTbl().getSelectedRow();
         System.out.println("Invoice selected: " + selectedInvIndex);
         if (selectedInvIndex != -1) {
-            InvoiceSalesHeaderSales selectedInv = framee.getInvoicesArray().get(selectedInvIndex);
-            ArrayList<InvoicSaleseLine> lines = selectedInv.getLines();
-            InvoiceSalesLineTableModel lineTableModel = new InvoiceSalesLineTableModel(lines);
-            framee.setLinesArray(lines);
-            framee.getInvLTbl().setModel(lineTableModel);
-            framee.getCustNameLbl().setText(selectedInv.getCustomer());
-            framee.getInvNumLbl().setText("" + selectedInv.getNum());
-            framee.getInvTotalIbl().setText("" + selectedInv.getInvoiceTotal());
-            framee.getInvDateLbl().setText(InvoiceSalesFrame.dateFormat.format(selectedInv.getInvDate()));
+            InvoiceHeader selectedInv = frameInvo.getInvoicesArray().get(selectedInvIndex);
+            ArrayList<InvoiceLine> lines = selectedInv.getLines();
+            InvoiceLineTableModel lineTableModel = new InvoiceLineTableModel(lines);
+            frameInvo.setLinesArray(lines);
+            frameInvo.getInvLTbl().setModel(lineTableModel);
+            frameInvo.getCustNameLbl().setText(selectedInv.getCustomer());
+            frameInvo.getInvNumLbl().setText("" + selectedInv.getNumber());
+            frameInvo.getInvTotalIbl().setText("" + selectedInv.getInvoiceTotal());
+            frameInvo.getInvDateLbl().setText(InvoiceFrame.dateFormat.format(selectedInv.getInvoiceDate()));
         }
     }
 
